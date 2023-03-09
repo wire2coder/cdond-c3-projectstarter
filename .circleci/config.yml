@@ -218,6 +218,7 @@ jobs:
       # Add ssh keys with fingerprint
       # inside circleci website
       # key name is udacity
+      # backend.yml, KeyName
       - add_ssh_keys:
           fingerprints: ["06:2b:2f:fa:5e:82:f3:85:b4:db:5a:5f:ec:77:fb:f0"]
 
