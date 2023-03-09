@@ -220,7 +220,7 @@ jobs:
       # key name is udacity
       # backend.yml, KeyName
       - add_ssh_keys:
-          fingerprints: ["06:2b:2f:fa:5e:82:f3:85:b4:db:5a:5f:ec:77:fb:f0"]
+          fingerprints: ["75:49:fe:53:8f:6d:ce:4e:dd:7f:b3:22:4b:20:9b:08"]
 
       # attach workspace
       - attach_workspace:
