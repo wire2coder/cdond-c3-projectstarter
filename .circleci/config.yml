@@ -216,8 +216,10 @@ jobs:
       - checkout
 
       # Add ssh keys with fingerprint
+      # inside circleci website
+      # key name is udacity
       - add_ssh_keys:
-          fingerprints: ["b9:a0:d0:39:de:5e:95:df:53:1e:ea:9a:f2:bd:c6:a0"]
+          fingerprints: ["06:2b:2f:fa:5e:82:f3:85:b4:db:5a:5f:ec:77:fb:f0"]
 
       # attach workspace
       - attach_workspace:
