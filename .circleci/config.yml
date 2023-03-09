@@ -122,8 +122,9 @@ jobs:
             cd frontend
             npm install
             npm audit fix --audit-level=critical --force
+            npm audit fix --force
             npm audit --audit-level=critical
-            
+
       # - slack/notify:
       #     channel: $SLACK_DEFAULT_CHANNEL
       #     event: fail
