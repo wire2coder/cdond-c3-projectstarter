@@ -198,41 +198,67 @@ jobs:
       # Here's where you will add some code to rollback on failure      
       # - destroy-environment
 
-#   configure-infrastructure:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Configure server
-#           command: |
-#             # Your code here
-#             exit 1
-#       # Here's where you will add some code to rollback on failure      
+  configure-infrastructure:
+    docker:
+      # Docker image here that supports Ansible
+      - image: python:3.7-alpine3.11
+    steps:
+      # Checkout code from git
+      - checkout
 
-#   run-migrations:
-#     docker:
-#       # Docker image here that supports NodeJS
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Run migrations
-#           command: |
-#             # Your code here
-#             exit 1
-#       - run:
-#           name: Send migration results to memstash
-#           command: |
-#             # Your code here
-#             exit 1
-#      # Here's where you will add some code to rollback on failure      
+      # Add ssh keys with fingerprint
+      - add_ssh_keys:
+          fingerprints: ["8b:ee:3d:5f:24:75:d0:21:2c:2a:aa:d7:a1:94:47:7a"]
+
+      # attach workspace
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update tar gzip ansible
+            pip install awscli
+            
+      - run:
+          name: Configure server
+          command: |
+            cat ./.circleci/ansible/inventory.txt
+            export ANSIBLE_HOST_KEY_CHECKING=False
+            export RECORD_HOST_KEYS=False
+            export ANSIBLE_PARAMIKO_BANNER_TIMEOUT=30   
+            echo ENVIROMENT=production > "backend/.env"      
+            echo TYPEORM_CONNECTION=postgres >> "backend/.env"
+            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
+            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> "backend/.env"          
+            echo TYPEORM_PORT=$TYPEORM_PORT >> "backend/.env"      
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> "backend/.env"            
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> "backend/.env"      
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> "backend/.env"     
+            echo "CONTENT OF backend/.env"      
+            cat backend/.env         
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml -v 
+            
+      # Here's where you will add some code to rollback on failure      
+      # - destroy-environment
+
+  # run-migrations:
+  #   docker:
+  #     # Docker image here that supports NodeJS
+  #   steps:
+  #     # Checkout code from git
+  #     - run:
+  #         name: Run migrations
+  #         command: |
+  #           # Your code here
+            
+  #     - run:
+  #         name: Send migration results to memstash
+  #         command: |
+  #           # Your code here
+            
+  #    # Here's where you will add some code to rollback on failure      
 
 #   deploy-frontend:
 #     docker:
