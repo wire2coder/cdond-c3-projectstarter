@@ -294,6 +294,9 @@ jobs:
             echo "YESSSS Current directory: $PWD"
             ip addr show
             npm install
+            npm audit fix --force
+            npm audit fix --force
+            echo "fixing stuff"
             npm run migrations > migrations_dump.txt
             cat migrations_dump.txt
             
