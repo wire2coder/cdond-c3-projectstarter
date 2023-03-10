@@ -300,7 +300,8 @@ jobs:
             # npm audit --audit-level=critical
             # npm audit fix        
             npm run migrations > migrations_dump.txt
-            cat migrations_dump.txt
+            cat ~/project/backend/migrations_dump.txt
+            echo ">>>>>>>>>>>> here"
             
       - run:
           name: Send migration status to kvdb.io
