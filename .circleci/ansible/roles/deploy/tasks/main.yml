@@ -1,27 +1,12 @@
 ---
-- name: "update local apt repo."
-  become: true
-  apt:
-    update_cache: yes
-
-- name: "upgrade apt packages"
-  become: true
-  apt:
-    upgrade: yes
-
-- name: "remove stale dependencies"
-  become: true
-  apt:
-    autoremove: yes
-
-- name: "install dependencies [nodejs and npm]."
+- name: Install dependencies.
   become: true
   apt:
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
 
-- name: "install pm2"
+- name: Install pm2
   become: true
   npm:
     name: pm2
@@ -29,19 +14,30 @@
     production: yes
     state: present
 
-- name: "Copy artifact into Instance" 
-  become: true
+- name: Creates directory
+  file:
+    path: /home/ubuntu/backend
+    state: directory
+
+- name: Copy backend dist files web server
   copy:
-    src: ~/project/artifact.tar.gz
-    dest: /home/ubuntu/artifact.tar.gz
+    src: /root/project/artifact.tar.gz
+    dest: /home/ubuntu/backend/artifact.tar.gz
 
+- name: Uncompress Backend
+  shell: |
+    cd /home/ubuntu/backend
+    tar xvzf artifact.tar.gz -C .
+    ls -la
 
-- name: "Start app"
+- name: Build
   become: true
   shell: |
-    cd /home/ubuntu
-    tar xzvf artifact.tar.gz
+    cd /home/ubuntu/backend
     npm install
     npm run build
-    pm2 stop all
-    pm2 start npm -- start
+
+- name: Start PM2
+  shell: |
+    cd /home/ubuntu/backend
+    pm2 start npm --name backend -- start
