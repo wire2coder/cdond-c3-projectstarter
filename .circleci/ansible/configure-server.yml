@@ -37,6 +37,7 @@
     - TYPEORM_MIGRATIONS: '{{ lookup(''env'', ''TYPEORM_MIGRATIONS'')}}'
     - TYPEORM_MIGRATIONS_DIR: '{{ lookup(''env'', ''TYPEORM_MIGRATIONS_DIR'')}}'
 
+  # these are FOLDERS in .circleci/ansible/roles  
   roles:
     - configure-server
     - configure-prometheus-node-exporter
