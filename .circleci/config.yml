@@ -494,14 +494,14 @@ jobs:
           name: Configure node-exporter
           command: |
             cd .circleci/ansible
-            
+
             # running 'ansible command' INSIDE 'circle ci' folder, .circleci/ansible/configure-node-exporter.yml
             ansible-playbook -i inventory.txt configure-node-exporter.yml
 
 
-# workflows:
-#   default:
-#     jobs:
+workflows:
+  default:
+    jobs:
 #       - build-frontend
 #       - build-backend
 #       - test-frontend:
@@ -530,10 +530,12 @@ jobs:
 #           requires: [deploy-backend, deploy-frontend]
 #       - cloudfront-update:
 #           requires: [smoke-test]
-#       - cleanup:
+      # - cleanup:
 #           requires: [cloudfront-update]
-
-# another "work flow" (running INSIDE circle ci)
-prometheus:
-    jobs:
+    
       - node-exporter
+
+
+# prometheus:
+    # jobs:
+      # - node-exporter
