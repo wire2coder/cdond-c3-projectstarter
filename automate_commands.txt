@@ -14,6 +14,9 @@ aws rds describe-db-instances --filters "Name=engine,Values=postgres" | grep DBI
 # show all names of 'EC2'
 aws ec2 describe-instances
 
+# aws for delete an 'EC2'
+aws ec2 terminate-instances --instance-ids i-1234567890abcdef0
+
 
 # Host names for Database
 postgres.cdjbpzo0rxzz.us-east-1.rds.amazonaws.com:5432
@@ -31,3 +34,5 @@ http://udapeople-4238cfc.s3-website-us-east-1.amazonaws.com/#/employees
 
 # the kvdb.io is a key-value 'database' (just a server)
 https://kvdb.io/LczeYSKVkhYHEHan97SoLK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+
+
