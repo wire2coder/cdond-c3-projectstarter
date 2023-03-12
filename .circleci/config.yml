@@ -29,7 +29,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/4VJ274WBBHEq9RdkvTFDeu/migration_${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl --insecure  https://kvdb.io/LczeYSKVkhYHEHan97SoLK/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if (($SUCCESS == 1))
             then
               cd ~/project/backend
@@ -246,7 +246,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-                curl --insecure https://kvdb.io/4VJ274WBBHEq9RdkvTFDeu/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+                curl --insecure https://kvdb.io/LczeYSKVkhYHEHan97SoLK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
      # Here's where you will add some code to rollback on failure
       - destroy-environment:
@@ -511,5 +511,5 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
-      # - cleanup:
-      #     requires: [cloudfront-update]
+      - cleanup:
+          requires: [cloudfront-update]

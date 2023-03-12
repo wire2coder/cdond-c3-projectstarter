@@ -11,6 +11,9 @@ aws rds describe-db-instances --filters "Name=engine,Values=postgres"
 aws rds describe-db-instances --filters "Name=engine,Values=postgres" | grep DBInstanceIdentifier
 aws rds describe-db-instances --filters "Name=engine,Values=postgres" | grep DBInstanceIdentifier | awk '{print $2}' | xargs -I {} echo {}
 
+# show all names of 'EC2'
+aws ec2 describe-instances
+
 
 # Host names for Database
 postgres.cdjbpzo0rxzz.us-east-1.rds.amazonaws.com:5432
@@ -21,3 +24,10 @@ pg_isready -d postgres -h postgres.cdjbpzo0rxzz.us-east-1.rds.amazonaws.com -p 5
 
 # API url 'backend' (just a server)
 https://<Public-IP>:3030/api/status
+https://udapeople-4238cfc.s3-website-us-east-1.amazonaws.com:3030/api/status
+
+# url for the 'front' (just a server)
+http://udapeople-4238cfc.s3-website-us-east-1.amazonaws.com/#/employees
+
+# the kvdb.io is a key-value 'database' (just a server)
+https://kvdb.io/LczeYSKVkhYHEHan97SoLK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
