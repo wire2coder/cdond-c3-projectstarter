@@ -477,7 +477,26 @@ jobs:
             else
               echo "Stack is the latest"
             fi
-            
+
+  # for
+  node-exporter:
+    docker:
+      - image: python:3.11-rc-alpine
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["75:49:fe:53:8f:6d:ce:4e:dd:7f:b3:22:4b:20:9b:08"]
+      - run:
+          name: Install ansible # running INSIDE "circle ci"
+          command: |
+            apk add --update ansible
+      - run:
+          name: Configure node-exporter
+          command: |
+            cd .circleci/ansible
+            # running 'ansible command' INSIDE 'circle ci' folder, .circleci/ansible/configure-node-exporter.yml
+            ansible-playbook -i inventory.txt configure-node-exporter.yml
+
 
 workflows:
   default:
@@ -512,3 +531,8 @@ workflows:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]
+
+# another "work flow" (running INSIDE circle ci)
+prometheus:
+    jobs:
+      - node-exporter
