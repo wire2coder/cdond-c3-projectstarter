@@ -376,7 +376,8 @@ jobs:
             export BACKEND=$(echo $BACKEND_IP | grep -o '[^ ]*$')
             
             echo $BACKEND
-            export API_URL="http://${BACKEND}:3030"
+            # export API_URL="http://${BACKEND}:3030"
+            export API_URL="http://${BACKEND}:30000000000"
             echo "API_URL=${API_URL}"
 
             echo "Sleeping for 1 minute"
