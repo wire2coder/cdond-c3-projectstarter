@@ -487,15 +487,15 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["75:49:fe:53:8f:6d:ce:4e:dd:7f:b3:22:4b:20:9b:08"]
       - run:
-          name: Install ansible # running INSIDE "circle ci"
+          # running INSIDE "circle ci"
+          name: Install ansible 
           command: |
             apk add --update ansible
       - run:
+          # running 'ansible command' INSIDE 'circle ci' folder, .circleci/ansible/configure-node-exporter.yml
           name: Configure node-exporter
           command: |
             cd .circleci/ansible
-
-            # running 'ansible command' INSIDE 'circle ci' folder, .circleci/ansible/configure-node-exporter.yml
             ansible-playbook -i inventory.txt configure-node-exporter.yml
 
 
@@ -532,9 +532,9 @@ workflows:
           requires: [smoke-test]
       - cleanup:
           requires: [cloudfront-update]    
-      - node-exporter
+      - node-exporter:
           requires: [smoke-test]
-
+          
 
 # prometheus:
     # jobs:
