@@ -1,0 +1,23 @@
+# show all names of buckets
+aws s3 ls | awk '{print $3}' | xargs -I {} echo {}
+
+# In this version of the command, the sh -c command is used to execute a shell command for each bucket name passed to xargs. The shell command uses the && operator to run two commands sequentially: the aws s3 rb command to delete the bucket, 
+# and the sleep 5 command to pause for 5 seconds.
+aws s3 ls | awk '{print $3}' | xargs -I {} sh -c 'aws s3 rb s3://{} --force && sleep 5'
+
+# show all names of 'RDS'
+aws rds describe-db-instances 
+aws rds describe-db-instances --filters "Name=engine,Values=postgres" 
+aws rds describe-db-instances --filters "Name=engine,Values=postgres" | grep DBInstanceIdentifier
+aws rds describe-db-instances --filters "Name=engine,Values=postgres" | grep DBInstanceIdentifier | awk '{print $2}' | xargs -I {} echo {}
+
+
+# Host names for Database
+postgres.cdjbpzo0rxzz.us-east-1.rds.amazonaws.com:5432
+
+sudo apt install -y postgresql-client
+pg_isready -d <db_name> -h <host_name> -p <port_number> -U <db_user>   
+pg_isready -d postgres -h postgres.cdjbpzo0rxzz.us-east-1.rds.amazonaws.com -p 5432 -U postgres
+
+# API url 'backend' (just a server)
+https://<Public-IP>:3030/api/status
