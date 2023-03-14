@@ -219,6 +219,9 @@ jobs:
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}      
 
+
+  # code that runs database migrations so that new changes are applied ????
+  # is this 'block' needed?
   run-migrations:
     docker:
       # Docker image here that supports NodeJS
@@ -246,6 +249,7 @@ jobs:
       - run:
           name: Send migration results to kvdb.io
           command: |
+            echo ">>>>>>>>>> CIRCLE_WORKFLOW_ID: ${CIRCLE_WORKFLOW_ID:0:7}"
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
                 curl --insecure https://kvdb.io/LczeYSKVkhYHEHan97SoLK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
@@ -512,7 +516,7 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
-#       - cloudfront-update:
-#           requires: [smoke-test]
-#       - cleanup:
-#           requires: [cloudfront-update]    
+      - cloudfront-update:
+          requires: [smoke-test]
+      - cleanup:
+          requires: [cloudfront-update]    
