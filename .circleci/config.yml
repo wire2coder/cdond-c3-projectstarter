@@ -205,6 +205,8 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update --no-cache ansible tar gzip aws-cli openssh
+            
+      # configure-server.yml is a FILE in .circleci/ansible/configure-server.yml
       - run:
           name: Configure server
           command: |
@@ -500,14 +502,14 @@ workflows:
       #         only: [main]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
 #       - cloudfront-update:
 #           requires: [smoke-test]
 #       - cleanup:
