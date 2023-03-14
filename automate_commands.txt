@@ -91,6 +91,9 @@ sudo systemctl restart prometheus
 git commit -am "update stuff" && git push origin master
 
 
-##################################
-stuff in cloudfront.yml
-##################################
+###############################################
+current
+###############################################
+
+http://udapeople-95444d0.s3-website-us-east-1.amazonaws.com/#/employees
+https://github.com/CircleCI-Public/slack-orb/wiki/Setup
