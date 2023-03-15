@@ -99,3 +99,13 @@ http://udapeople-95444d0.s3-website-us-east-1.amazonaws.com/#/employees
 100.27.10.225:3030/api/status
 
 https://github.com/CircleCI-Public/slack-orb/wiki/Setup
+
+
+mkdir my-repo
+cd my-repo
+git init
+curl -u 'wire2coder' https://api.github.com/user/repos -d '{"name":"devops-auto-deploy"}'
+git remote -v
+git add .
+git commit -m "Initial commit"
+git push origin master
