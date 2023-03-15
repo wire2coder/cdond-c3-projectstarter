@@ -109,3 +109,5 @@ git remote -v
 git add .
 git commit -m "Initial commit"
 git push origin master
+
+i=1; for file in *.png; do mv "$file" "SCREENSHOT11_$(printf '%d' $i).png"; i=$((i+1)); done
