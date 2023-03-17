@@ -1,3 +1,5 @@
+ssh ubuntu@ec2-54-236-50-252.compute-1.amazonaws.com -i 
+
 # show all names of buckets
 aws s3 ls | awk '{print $3}' | xargs -I {} echo {}
 
@@ -83,9 +85,12 @@ sudo nano /etc/prometheus/prometheus.yml
 ls /etc/prometheus/alertmanager.yml /etc/systemd/system/alertmanager.service /etc/prometheus/rules.yml /etc/prometheus/prometheus.yml
 cat /etc/prometheus/alertmanager.yml && echo "\n---\n" && cat /etc/systemd/system/alertmanager.service && echo "\n---\n" && cat /etc/prometheus/rules.yml && echo "\n---\n" && cat /etc/prometheus/prometheus.yml
 
+prometheus alert manager
+https://knowledge.udacity.com/questions/942562
+find / -type f -name 'alertmanager.service' 2>/dev/null
+/etc/systemd/system/alertmanager.service
 
-udapeople-frontend-aaf4893
-aaf4893
+
 sudo systemctl restart prometheus
 
 git commit -am "update stuff" && git push origin master
